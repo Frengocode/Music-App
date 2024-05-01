@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Главная Страница</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<style>
+    /* Стиль, который дизайнер мог бы добавить */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url(https://wallpaperaccess.com/full/2923100.jpg);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #333;
+    color: #fff;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.menu a {
+    color: #333;
+    font-size: 20px;
+    margin: 0 20px;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.menu a:hover {
+    color: #4CAF50;
+}
+
+.menu a::before {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #4CAF50;
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease;
+}
+
+.menu a:hover::before {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+.does-exist {
+    text-align: center;
+    margin-top: 50px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+}
+
+.does-exist a {
+    color: #4CAF50;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.does-exist a:hover {
+    color: #45a049;
+}
+
+
+.fab {
+    margin-right: 5px;
+}
+
+.music-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease;
+    position: relative;
+}
+
+.music-card:hover {
+    transform: translateY(-5px);
+}
+
+.music-title {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 0 10px;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #45a049;
+}
+
+    .fab {
+        font-size: 24px;
+        margin-right: 5px;
+    }
+    .music-cards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .music-card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin: 20px;
+        padding: 20px;
+        text-align: center;
+        transition: transform 0.3s ease;
+        position: relative;
+    }
+    .music-card:hover {
+        transform: translateY(-5px);
+    }
+    .album-cover {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+    .music-title {
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 20px;
+    }
+    .button-container {
+        display: flex;
+        justify-content: center;
+    }
+    .button {
+        background-color: #117779;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        margin: 0 10px;
+        text-decoration: none;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    .button:hover {
+        background-color: #09b9d8;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Добро пожаловать на наш музыкальный портал</h1>
+        <p>Здесь вы можете наслаждаться музыкой и делиться своими впечатлениями</p>
+    </div>
+
+    <div class="menu">
+        <a href="{% url "search" %}"><i class="fas fa-search fab"></i>Поиск</a>
+        <a href="{% url "country_musics" %}"><i class="fas fa-music fab"></i>Песни Из Моего Города</a>
+        <a href="{% url "user_detail" request.user.id %}"><i class="fas fa-user-circle fab"></i>Профиль</a>
+        <a href="{% url "settings" %}"><i class="fas fa-cog fab"></i>Настройки</a>
+        <a href="{% url "user_playlist" request.user.id %}"><i class="fas fa-list fab"></i>Мой Плейлист</a> <!-- Добавляем иконку для Моего Плейлиста -->
+    </div>
+
+
+    {% if musics  %}
+
+    <div class="music-cards">
+        {% for i in musics %}
+
+        <div class="music-card">
+            <img src="{{ i.albom.url }}" class="album-cover" alt="Album Cover">
+            <h2 class="music-title">{{ i.music_title }}</h2>
+            <div class="button-container">
+                <a href="{% url "music_detail" i.id %}" class="button">Послушать</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+</div>
+
+{% else %}
+
+<div class="does-exist">
+    <h1>Вы Можете Изменить Категорию Песень вот здесь <a href="{% url "user_profile_components_update" %}">Update</a></h1>
+</div>
+
+{% endif %}
+
+</body>
+</html>

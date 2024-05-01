@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://wallpaperaccess.com/full/2923100.jpg');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            text-align: center;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 300px;
+            margin-bottom: 20px;
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .music-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .music-item {
+            margin: 20px;
+            text-align: center;
+            width: 300px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .music-item:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .music-item img {
+            width: 100%;
+            height: auto;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .music-item h1 {
+            padding: 20px 0;
+            margin: 0;
+            font-size: 20px;
+            color: #333;
+        }
+
+        .does {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .does img {
+            border-radius: 100%;
+            width: 300px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    {% if play_lists %}
+    <div class="music-list">
+        {% for i in play_lists %}
+            <div class="music-item">
+                <a href="{% url "music_detail" i.id %}">
+                    <img src="{{ i.albom.url }}" alt="{{ i.music_title }}">
+                    <h1>{{ i.music_title }}</h1>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="does">
+        <img src="https://wallpaper.dog/large/20395334.jpg" alt="">
+        <h1>Пока что Песен Нет</h1>
+    </div>
+    {% endif %}
+</div>
+
+</body>
+</html>

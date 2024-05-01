@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url(https://wallpaperaccess.com/full/2923100.jpg);
+
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1, h2, h3 {
+            color: #333;
+        }
+
+        form {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 300px;
+        }
+
+        button[type="submit"] {
+            background-color: #19a5e1;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #4682ea;
+        }
+
+        .music-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .music-item {
+            margin: 20px;
+            text-align: center;
+            width: 300px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .music-item:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .music-item img {
+            width: 100%;
+            height: auto;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .music-item h1 {
+            padding: 20px 0;
+            margin: 0;
+            font-size: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <form method="GET">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Поиск</button>
+    </form>
+
+    <div class="music-list">
+        {% if musics %}
+            {% for i in musics %}
+                <div class="music-item">
+                    <a href="{% url "music_detail" i.id %}">
+                        <img src="{{ i.albom.url }}" alt="{{ i.music_title }}">
+                        <h1>{{ i.music_title }}</h1>
+                    </a>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+</body>
+</html>

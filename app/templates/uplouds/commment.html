@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Комментарии</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="comments-container">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button>Отправить</button>
+        </form>
+
+        <div class="comments">
+            {% if comments %}
+                {% for comment in comments %}
+                    <div class="comment">
+                        <div class="user-info">
+                            {% if comment.user.profile_photo %}
+                            <a href="{% url "user_detail" comment.user.id %}"><img src="{{ comment.user.profile_photo.url }}" alt="User Photo"></a>
+                            {% else %}
+                            <a href="{% url "user_detail" comment.user.id %}"> <img class="user-avatar" src="https://th.bing.com/th/id/R.bac0afc25f32a53674b45831f2fb37dd?rik=RblOtsvYxaH7XQ&riu=http%3a%2f%2fgetwallpapers.com%2fwallpaper%2ffull%2fa%2f9%2fe%2f285208.jpg&ehk=aVFoK%2btVrjcVAvchPebRZKviUFBy0kJHoUmr5ggXlIE%3d&risl=&pid=ImgRaw&r=0" class="profile-image" alt="Profile Image"></a> 
+                            {% endif %}
+                            <span>{{ comment.user.username }}</span>
+                        </div>
+                        <p>{{ comment.text }}</p>
+                    </div>
+                    <form action="{% url "comment_delete" comment.id %}">
+                        {% csrf_token %}
+                        <button type="submit">Delete</button>
+                    </form>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+<style>
+
+    
+    button {
+    background-color: #ff0000; /* Красный цвет фона кнопки */
+    color: #fff; /* Белый цвет текста кнопки */
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px; /* Закругление углов кнопки */
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #cc0000; /* Красный цвет фона кнопки при наведении */
+}
+
+
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9; /* Цвет фона страницы */
+}
+
+.comments-container {
+    max-width: 800px; /* Максимальная ширина контейнера */
+    margin: 50px auto; /* Выравнивание по центру */
+    padding: 20px;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+.comments {
+    margin-top: 20px;
+}
+
+.comment {
+    background-color: #fff; /* Цвет фона комментария */
+    padding: 10px;
+    border-radius: 5px; /* Закругление углов комментария */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Тень комментария */
+    margin-bottom: 10px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.user-info img {
+    width: 30px; /* Ширина изображения пользователя */
+    height: 30px; /* Высота изображения пользователя */
+    border-radius: 50%; /* Закругление углов изображения пользователя */
+    margin-right: 10px;
+}
+
+.user-info span {
+    font-weight: bold;
+    color: #333; /* Цвет имени пользователя */
+}
+
+.comment p {
+    margin: 0;
+}
+
+</style>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет</title>
+    <!-- Подключаем стили -->
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <!-- Выводим имя пользователя -->
+        <h1>{{ users.username }}</h1>
+        <!-- Выводим фотографию профиля, если она есть -->
+        {% if users.profile_photo %}
+        <img src="{{ users.profile_photo.url }}" alt="Profile Photo">
+        {% else %}
+        <img src="https://th.bing.com/th/id/R.bac0afc25f32a53674b45831f2fb37dd?rik=RblOtsvYxaH7XQ&riu=http%3a%2f%2fgetwallpapers.com%2fwallpaper%2ffull%2fa%2f9%2fe%2f285208.jpg&ehk=aVFoK%2btVrjcVAvchPebRZKviUFBy0kJHoUmr5ggXlIE%3d&risl=&pid=ImgRaw&r=0" alt="">
+        {% endif %}
+    </div>
+
+    <div class="menu">
+        <a href="{% url 'user_playlist' users.id %}">Перейти к плейлисту</a>
+
+        
+    </div>
+</div>
+
+</body>
+</html>
+
+
+<style>
+    /* profile.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url(https://wallpaperaccess.com/full/2923100.jpg);
+    
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.header h1 {
+    margin-bottom: 10px;
+}
+
+.header img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+
+.menu {
+    text-align: center;
+}
+
+.menu h1 {
+    margin-bottom: 20px;
+}
+
+.menu a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.menu a:hover {
+    background-color: #45a049;
+}
+
+</style>
